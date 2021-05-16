@@ -96,4 +96,85 @@ window.addEventListener('DOMContentLoaded', function () {
         more.classList.remove('more-splash');
         document.body.style.overflow = '';
       });
+
+  //form JSON
+
+  let message = {
+    loading:'Загрузка...',
+    success:'Спасибо',
+    failure:'Ошибка'
+  };
+
+  let form = document.querySelector('.main-form'),
+      input = form.getElementsByTagName('input'),
+      statusMessage = document.createElement('div');
+
+      statusMessage.classList.add('status');
+
+      form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        form.after(statusMessage);
+
+        let request = new XMLHttpRequest();
+        
+        request.open('POST', 'https://httpbin.org/post');
+        request.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+
+        let formData = new FormData(form);
+
+        let obj={};
+        formData.forEach(function(value,key){
+          obj[key]=value;
+        });
+
+        let json = JSON.stringify(obj);
+        request.send(json);
+        request.addEventListener('readystatechange', function(event) {
+          if (request.readyState<4) {
+            statusMessage.innerHTML = message.loading;
+          } else if (request.readyState === 4 && request.status === 200) {
+            statusMessage.innerHTML = message.success;
+          } else {
+            statusMessage.innerHTML = message.failure;
+          }
+        });
+
+        for(let i=0; i<input.length; i++) {
+          input[i].value = '';
+        }
+      });
+
+      //form FormData 
+      function formMain(){
+        let form = document.getElementById('form'),
+            input = form.querySelectorAll('input');
+
+        form.addEventListener('submit', function(event){
+          event.preventDefault();
+          form.after(statusMessage);
+
+          let request = new XMLHttpRequest();
+          request.open('POST', 'https://httpbin.org/post');
+          request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+          let formData = new FormData(form);
+  
+          request.send(formData);
+          request.addEventListener('readystatechange', function(event) {
+            if (request.readyState<4) {
+              statusMessage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status === 200) {
+              statusMessage.innerHTML = message.success;
+            } else {
+              statusMessage.innerHTML = message.failure;
+            }
+          });
+  
+          for(let i=0; i<input.length; i++) {
+            input[i].value = '';
+          }
+        });
+      }
+        formMain();
 });
+
