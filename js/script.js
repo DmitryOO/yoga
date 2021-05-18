@@ -97,7 +97,7 @@ window.addEventListener('DOMContentLoaded', function () {
     document.body.style.overflow = '';
   });
 
-  //form JSON
+  //form XMLHttpRequest JSON
 
   let message = {
     loading: 'Загрузка...',
@@ -144,7 +144,7 @@ window.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  //form FormData + Promise
+  //form XMLHttpRequest FormData + Promise
   function formMain() {
     let form = document.getElementById('form'),
       input = form.querySelectorAll('input');
