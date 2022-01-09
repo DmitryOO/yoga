@@ -265,7 +265,8 @@ window.addEventListener('DOMContentLoaded', function () {
       if (restDays.value == '' || persons.value == '') {
         totalValue.textContent = 0;
       } else {
-        totalValue.textContent = total;
+        let a = total;
+        totalValue.textContent = a * +document.querySelector('select').options[document.getElementById('select').selectedIndex].value;
       }
     });
     restDays.addEventListener('input', function(){
@@ -274,7 +275,8 @@ window.addEventListener('DOMContentLoaded', function () {
       if (restDays.value == '' || persons.value == '') {
         totalValue.textContent = 0;
       } else {
-        totalValue.textContent = total;
+        let a = total;
+        totalValue.textContent = a * +document.querySelector('select').options[document.getElementById('select').selectedIndex].value;
       }
     });
     place.addEventListener('change', function(){
